@@ -1,0 +1,46 @@
+{
+    "name": "fortrabbit/laravel-object-storage",
+    "description": "Flysystem adapter for fortrabbit Object Storage",
+    "license": "MIT",
+    "version": "0.1",
+    "keywords": [
+        "flysystem",
+        "laravel",
+        "fortrabbit",
+        "s3",
+        "object-storage"
+    ],
+    "authors": [
+        {
+            "name": "Oliver Stark",
+            "email": "os@fortrabbit.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "league/flysystem": "^1.0.40",
+        "aws/aws-sdk-php": "^3.0.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "illuminate/support": "^5.5 | 6.0",
+        "illuminate/filesystem": "^5.5 | 6.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.10.8",
+        "friendsofphp/php-cs-fixer": "^2.12.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "fortrabbit\\ObjectStorage\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "fortrabbit\\ObjectStorage\\ServiceProvider"
+            ]
+        }
+    }
+}
