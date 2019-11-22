@@ -9,6 +9,26 @@ use League\Flysystem\Filesystem;
 class ServiceProvider extends BaseServiceProvider
 {
     /**
+     * @param array $config
+     *
+     * @return array
+     */
+    protected static function mergeDefaults(array $config): array
+    {
+        $defaults = [
+            'version'  => 'latest',
+            'key'      => env('OBJECT_STORAGE_KEY'),
+            'secret'   => env('OBJECT_STORAGE_SECRET'),
+            'region'   => env('OBJECT_STORAGE_REGION'),
+            'bucket'   => env('OBJECT_STORAGE_BUCKET'),
+            'endpoint' => "https://" . env('OBJECT_STORAGE_SERVER'),
+            'url'      => env('OBJECT_STORAGE_URL')
+        ];
+
+        return $config + $defaults;
+    }
+
+    /**
      * Register 'object-storage' driver
      *
      * @return void
@@ -18,9 +38,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         /** @var \Illuminate\Filesystem\FilesystemManager $storage */
         $storage = $this->app->make('filesystem');
-        $storage->extend('object-storage', function ($app, $config) {
+        $storage->extend('object-storage', function ($app, array $config) {
 
-            $s3Config = $config + ['version' => 'latest'];
+            $s3Config = self::mergeDefaults($config);
             $root     = $s3Config['root'] ?? null;
             $options  = $config['options'] ?? [];
 
