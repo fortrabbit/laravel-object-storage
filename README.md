@@ -6,7 +6,7 @@
 composer require fortrabbit/laravel-object-storage
 ```
 
-## Config
+## Configure the 'object-storage' driver
 
 You are free to choose the disk name. In this example it is `s3`, but it's up to you.
 
