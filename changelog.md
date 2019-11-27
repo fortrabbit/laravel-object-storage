@@ -1,4 +1,6 @@
 # Changelog
 
-## 1.0.0 - 2019-XX-XX
+## 1.0.0 - 2019-11-27
+
+Initial release 
 

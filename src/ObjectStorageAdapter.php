@@ -12,11 +12,7 @@ class ObjectStorageAdapter extends AwsS3Adapter
     /**
      * Upload an object.
      *
-     * @param        $path
-     * @param        $body
-     * @param Config $config
-     *
-     * @return array|bool
+     * {@inheritdoc}
      */
     protected function upload($path, $body, Config $config)
     {
