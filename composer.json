@@ -25,7 +25,7 @@
         "illuminate/filesystem": "^5.5|^6.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.10.8"
+        "phpstan/phpstan": "^0.12"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +41,7 @@
     },
     "scripts": {
         "test": [
-            "vendor/bin/phpstan"
+            "vendor/bin/phpstan analyse src --level 5"
         ]
     }
 }
