@@ -32,14 +32,16 @@
             "fortrabbit\\ObjectStorage\\": "src/"
         }
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "extra": {
         "laravel": {
             "providers": [
                 "fortrabbit\\ObjectStorage\\ServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpstan"
+        ]
     }
 }
