@@ -47,7 +47,7 @@ class ObjectStorageAdapter extends AwsS3Adapter
         try {
             $this->s3Client->execute($command);
         } catch (S3Exception $exception) {
-            return false;
+            return [];
         }
 
         return $this->normalizeResponse($options, $path);

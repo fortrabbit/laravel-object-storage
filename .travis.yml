@@ -1,0 +1,52 @@
+sudo: required
+dist: trusty
+language: php
+
+cache:
+  apt: true
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1
+      env:
+        - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
+    - php: 7.1
+      env:
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
+    - php: 7.2
+      env:
+        - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
+    - php: 7.2
+      env:
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
+    - php: 7.3
+      env:
+        - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
+    - php: 7.3
+      env:
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
+    - php: 7.4
+      env:
+        - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
+    - php: 7.4
+      env:
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
+    - php: nightly
+      env:
+        - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
+    - php: nightly
+      env:
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
+  allow_failures:
+    - php: 7.4
+    - php: nightly
+
+install:
+  - travis_retry composer install -o --no-interaction --prefer-dist --no-suggest
+  - travis_retry composer update --prefer-source $COMPOSER_FLAGS
+  - composer info illuminate/filesystem | grep "versions"
+
+script: composer test
