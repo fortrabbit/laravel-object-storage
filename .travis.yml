@@ -15,31 +15,31 @@ matrix:
         - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
     - php: 7.1
       env:
-        - COMPOSER_FLAGS="" # Cover laravel latest (LTS) vendors
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
     - php: 7.2
       env:
         - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
     - php: 7.2
       env:
-        - COMPOSER_FLAGS="" # Cover laravel latest (LTS) vendors
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
     - php: 7.3
       env:
         - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
     - php: 7.3
       env:
-        - COMPOSER_FLAGS="" # Cover laravel latest (LTS) vendors
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
     - php: 7.4
       env:
         - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
     - php: 7.4
       env:
-        - COMPOSER_FLAGS="" # Cover laravel latest (LTS) vendors
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
     - php: nightly
       env:
         - COMPOSER_FLAGS="--prefer-lowest" # Cover laravel ^5.5 (LTS) vendors
     - php: nightly
       env:
-        - COMPOSER_FLAGS="" # Cover laravel latest (LTS) vendors
+        - COMPOSER_FLAGS="" # Cover laravel latest vendors
   allow_failures:
     - php: 7.4
     - php: nightly
