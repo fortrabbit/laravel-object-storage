@@ -2,7 +2,7 @@
     "name": "fortrabbit/laravel-object-storage",
     "description": "Flysystem adapter for fortrabbit Object Storage",
     "license": "MIT",
-    "version": "1.0",
+    "version": "1.2",
     "keywords": [
         "flysystem",
         "laravel",
