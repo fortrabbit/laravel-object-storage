@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 - UNRELEASED
+
+Laravel 9 / Flysystem 3 compatibility
+
 ## 1.4.0 - 2021-05-04
 
 Dependency house keeping

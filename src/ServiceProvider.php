@@ -3,16 +3,19 @@
 namespace fortrabbit\ObjectStorage;
 
 use Aws\S3\S3Client;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use League\Flysystem\AwsS3V3\PortableVisibilityConverter;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Visibility;
 
 class ServiceProvider extends BaseServiceProvider
 {
     /**
      * @var array
      */
-    protected static $OBJECT_STORAGE_SECRETS = [];
+    protected static array $OBJECT_STORAGE_SECRETS = [];
 
     /**
      * Register 'object-storage' driver
@@ -22,21 +25,33 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
+
         /** @var \Illuminate\Filesystem\FilesystemManager $storage */
         $storage = $this->app->make('filesystem');
         $storage->extend('object-storage', function ($app, array $config) {
 
             $s3Config = self::mergeDefaults($config);
-            $root     = $s3Config['root'] ?? null;
-            $options  = $config['options'] ?? [];
+            $root = (string) ($s3Config['root'] ?? '');
+            $streamReads = $s3Config['stream_reads'] ?? false;
+            $visibility = new PortableVisibilityConverter(
+                $config['visibility'] ?? Visibility::PUBLIC
+            );
 
-            return new Filesystem(
-                new ObjectStorageAdapter(
-                    new S3Client($s3Config),
-                    $s3Config['bucket'],
-                    $root,
-                    $options
-                ), $config);
+            $adapter = new ObjectStorageAdapter(
+                new S3Client($s3Config),
+                $s3Config['bucket'],
+                $root,
+                $visibility,
+                null,
+                [],
+                $streamReads
+            );
+
+            return new FilesystemAdapter(
+                new Filesystem($adapter, $config),
+                $adapter,
+                $config
+            );
         });
     }
 

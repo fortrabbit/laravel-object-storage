@@ -16,15 +16,16 @@
         }
     ],
     "require": {
-        "php": "^7.1|^8.0",
-        "league/flysystem": "^1.0.40",
+        "php": "^8.0",
+        "league/flysystem": "^3.0.0",
         "aws/aws-sdk-php": "^3.0.0",
-        "league/flysystem-aws-s3-v3": "^1.0.7",
-        "illuminate/support": "^5.5|^6.0|^7.0|^8.0",
-        "illuminate/filesystem": "^5.5|^6.0|^7.0|^8.0"
+        "league/flysystem-aws-s3-v3": "^3.0.0",
+        "illuminate/support": "^9.0",
+        "illuminate/filesystem": "^9.0",
+        "league/mime-type-detection": "^1.9"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12"
+        "phpstan/phpstan": "^1.4"
     },
     "autoload": {
         "psr-4": {
@@ -39,7 +40,7 @@
         }
     },
     "scripts": {
-        "test": [
+        "phpstan": [
             "vendor/bin/phpstan analyse src --level 5"
         ]
     }
