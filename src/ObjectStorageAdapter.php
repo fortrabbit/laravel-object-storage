@@ -100,6 +100,10 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
             $options['params']['ContentType'] = $mimeType;
         }
 
+        if (!isset($options['ContentLength'])) {
+            $options['params']['ContentLength'] = $this->getBodySize($body);
+        }
+
         // Perform a regular PutObject operation,
         // since fortrabbit does not support
         // S3 multi-part uploads so far
@@ -148,6 +152,23 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
         }
 
         return $options + $this->options;
+    }
+
+    private function getBodySize($body): ?int
+    {
+        if (is_resource($body)) {
+            $stat = fstat($body);
+
+            if (!is_array($stat) || !isset($stat['size'])) {
+                return null;
+            }
+
+            return $stat['size'];
+        }
+
+        return defined('MB_OVERLOAD_STRING')
+            ? mb_strlen($body, '8bit')
+            : strlen($body);
     }
 
 
