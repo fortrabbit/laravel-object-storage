@@ -52,7 +52,8 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
         MimeTypeDetector    $mimeTypeDetector = null,
         array               $options = [],
         bool                $streamReads = true
-    ) {
+    )
+    {
         $this->client = $client;
         $this->prefixer = new PathPrefixer($prefix);
         $this->bucket = $bucket;
@@ -102,12 +103,14 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
         // Perform a regular PutObject operation,
         // since fortrabbit does not support
         // S3 multi-part uploads so far
+
         $command = $this->client->getCommand('PutObject', [
                 'Bucket' => $this->bucket,
                 'Key' => $key,
                 'Body' => $body,
                 'ACL' => $acl,
-            ] + $options);
+            ] + $this->options['params']);
+
 
         try {
             $this->client->execute($command);
