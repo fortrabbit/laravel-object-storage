@@ -2,7 +2,6 @@
 
 namespace fortrabbit\ObjectStorage;
 
-use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3ClientInterface;
 use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\AwsS3V3\PortableVisibilityConverter;
@@ -17,7 +16,6 @@ use Throwable;
 
 class ObjectStorageAdapter extends AwsS3V3Adapter
 {
-
     /**
      * @var string
      */
@@ -107,13 +105,12 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
         // Perform a regular PutObject operation,
         // since fortrabbit does not support
         // S3 multi-part uploads so far
-
         $command = $this->client->getCommand('PutObject', [
                 'Bucket' => $this->bucket,
                 'Key' => $key,
                 'Body' => $body,
                 'ACL' => $acl,
-            ] + $this->options['params']);
+            ] + $options['params']);
 
 
         try {
@@ -159,7 +156,7 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
         if (is_resource($body)) {
             $stat = fstat($body);
 
-            if (!is_array($stat) || !isset($stat['size'])) {
+            if (!is_array($stat)) {
                 return null;
             }
 

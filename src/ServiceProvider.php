@@ -12,9 +12,6 @@ use League\Flysystem\Visibility;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    /**
-     * @var array
-     */
     protected static array $OBJECT_STORAGE_SECRETS = [];
 
     /**
@@ -25,23 +22,22 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-
         /** @var \Illuminate\Filesystem\FilesystemManager $storage */
         $storage = $this->app->make('filesystem');
         $storage->extend('object-storage', function ($app, array $config) {
 
             $s3Config = self::mergeDefaults($config);
-            $root = (string) ($s3Config['root'] ?? '');
+            $prefix = (string) ($s3Config['root'] ?? '');
             $streamReads = $s3Config['stream_reads'] ?? false;
-            $visibility = new PortableVisibilityConverter(
+            $visibilityConverter = new PortableVisibilityConverter(
                 $config['visibility'] ?? Visibility::PUBLIC
             );
 
             $adapter = new ObjectStorageAdapter(
                 new S3Client($s3Config),
                 $s3Config['bucket'],
-                $root,
-                $visibility,
+                $prefix,
+                $visibilityConverter,
                 null,
                 [],
                 $streamReads

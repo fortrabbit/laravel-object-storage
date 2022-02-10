@@ -29,7 +29,7 @@ You are free to choose the disk name. In this example it is `s3`, but it's up to
 ```
 
 
-Environment variables for Object Storage access are avaible automatically on fortrabbit.
+Environment variables for Object Storage access are available automatically on fortrabbit.
 For local access you need to set them.
 
 ```
