@@ -2,8 +2,14 @@
 
 ## Install
 
+The most recent version (2.x) is compatible with Laravel 9 and Flysystem 3.
+
 ```
+# For laravel 9
 composer require fortrabbit/laravel-object-storage
+
+# For laravel 6,7,8
+composer require fortrabbit/laravel-object-storage:^1.4
 ```
 
 ## Configure the 'object-storage' driver
@@ -23,7 +29,7 @@ You are free to choose the disk name. In this example it is `s3`, but it's up to
 ```
 
 
-Environment variables for Object Storage access are avaible automatically on fortrabbit.
+Environment variables for Object Storage access are available automatically on fortrabbit.
 For local access you need to set them.
 
 ```
