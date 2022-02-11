@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 - UNRELEASED
+## 2.0.0 - 2022-02-11
 
 Laravel 9 / Flysystem 3 compatibility
 
