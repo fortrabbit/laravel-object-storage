@@ -42,6 +42,13 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
      */
     private $visibility;
 
+    public const EXTRA_METADATA_FIELDS = [
+        'Metadata',
+        'StorageClass',
+        'ETag',
+        'VersionId',
+    ];
+
     public function __construct(
         S3ClientInterface   $client,
         string              $bucket,
