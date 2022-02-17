@@ -1,5 +1,5 @@
 {
-    "name": "fortrabbit/laravel-object-storage",
+    "name": "bmidget/laravel-object-storage",
     "description": "Flysystem adapter for fortrabbit Object Storage",
     "license": "MIT",
     "keywords": [
