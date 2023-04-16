@@ -2,13 +2,13 @@
 
 ## Install
 
-The most recent version (2.x) is compatible with Laravel 9 and Flysystem 3.
+The most recent version (2.x) is compatible with Laravel 9 and 10
 
 ```
-# For laravel 9
+# For laravel 9 and 10
 composer require fortrabbit/laravel-object-storage
 
-# For laravel 6,7,8
+# For laravel 6,7,8 
 composer require fortrabbit/laravel-object-storage:^1.4
 ```
 
