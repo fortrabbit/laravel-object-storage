@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 - 2024-02-26
+
+Method `getUrl()` to get the public url 
+
 ## 2.1.0 - 2022-04-15
 
 Laravel 10 compatibility
