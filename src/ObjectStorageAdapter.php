@@ -81,6 +81,12 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
     }
 
 
+    public function getUrl(string $path): string
+    {
+        return 'https://' . env('OBJECT_STORAGE_HOST') . '/' . $path;
+    }
+
+
     /**
      * @param string          $path
      * @param string|resource $body
