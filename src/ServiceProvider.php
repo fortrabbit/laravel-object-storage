@@ -3,6 +3,7 @@
 namespace fortrabbit\ObjectStorage;
 
 use Aws\S3\S3Client;
+use Closure;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -24,31 +25,37 @@ class ServiceProvider extends BaseServiceProvider
     {
         /** @var \Illuminate\Filesystem\FilesystemManager $storage */
         $storage = $this->app->make('filesystem');
-        $storage->extend('object-storage', function ($app, array $config) {
+        $storage->extend('object-storage', Closure::fromCallable([$this, 'createDisk']));
+    }
 
-            $s3Config = self::mergeDefaults($config);
-            $prefix = (string) ($s3Config['root'] ?? '');
-            $streamReads = $s3Config['stream_reads'] ?? false;
-            $visibilityConverter = new PortableVisibilityConverter(
-                $config['visibility'] ?? Visibility::PUBLIC
-            );
+    /**
+     * Laravel 13 rebinds anonymous driver closures to the FilesystemManager,
+     * which breaks self:: calls, so the driver is registered from a method.
+     */
+    protected function createDisk($app, array $config): FilesystemAdapter
+    {
+        $s3Config = self::mergeDefaults($config);
+        $prefix = (string) ($s3Config['root'] ?? '');
+        $streamReads = $s3Config['stream_reads'] ?? false;
+        $visibilityConverter = new PortableVisibilityConverter(
+            $config['visibility'] ?? Visibility::PUBLIC
+        );
 
-            $adapter = new ObjectStorageAdapter(
-                new S3Client($s3Config),
-                $s3Config['bucket'],
-                $prefix,
-                $visibilityConverter,
-                null,
-                [],
-                $streamReads
-            );
+        $adapter = new ObjectStorageAdapter(
+            new S3Client($s3Config),
+            $s3Config['bucket'],
+            $prefix,
+            $visibilityConverter,
+            null,
+            [],
+            $streamReads
+        );
 
-            return new FilesystemAdapter(
-                new Filesystem($adapter, $config),
-                $adapter,
-                $config
-            );
-        });
+        return new FilesystemAdapter(
+            new Filesystem($adapter, $config),
+            $adapter,
+            $config
+        );
     }
 
     /**

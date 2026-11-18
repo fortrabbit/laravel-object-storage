@@ -43,13 +43,13 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
     private $visibility;
 
     public function __construct(
-        S3ClientInterface   $client,
-        string              $bucket,
-        string              $prefix = '',
-        VisibilityConverter $visibility = null,
-        MimeTypeDetector    $mimeTypeDetector = null,
-        array               $options = [],
-        bool                $streamReads = true
+        S3ClientInterface    $client,
+        string               $bucket,
+        string               $prefix = '',
+        ?VisibilityConverter $visibility = null,
+        ?MimeTypeDetector    $mimeTypeDetector = null,
+        array                $options = [],
+        bool                 $streamReads = true
     )
     {
         $this->client = $client;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0 - 2026-11-18
+
+Laravel 11, 12 and 13 compatibility, PHP 8.4 compatibility
+
 ## 2.2.0 - 2024-02-26
 
 Method `getUrl()` to get the public url 
