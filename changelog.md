@@ -4,6 +4,8 @@
 
 Laravel 11, 12 and 13 compatibility, PHP 8.4 compatibility
 
+`url()` uses the disk `url` setting, `OBJECT_STORAGE_URL` or the App Secrets when `OBJECT_STORAGE_HOST` is not set
+
 ## 2.2.0 - 2024-02-26
 
 Method `getUrl()` to get the public url 

@@ -50,6 +50,7 @@ class ServiceProvider extends BaseServiceProvider
             [],
             $streamReads
         );
+        $adapter->setBaseUrl($s3Config['url'] ?? null);
 
         return new FilesystemAdapter(
             new Filesystem($adapter, $config),
@@ -70,7 +71,8 @@ class ServiceProvider extends BaseServiceProvider
             'region'      => env('OBJECT_STORAGE_REGION', self::secret('REGION')),
             'bucket'      => env('OBJECT_STORAGE_BUCKET', self::secret('BUCKET')),
             'endpoint'    => "https://" . env('OBJECT_STORAGE_SERVER', self::secret('SERVER')),
-            'url'         => env('OBJECT_STORAGE_URL', self::secret('URL')),
+            // App Secrets have HOST, not URL
+            'url'         => env('OBJECT_STORAGE_URL', self::secret('URL') ?? (self::secret('HOST') ? 'https://' . self::secret('HOST') : null)),
             'credentials' => [
                 'key'    => env('OBJECT_STORAGE_KEY', self::secret('KEY')),
                 'secret' => env('OBJECT_STORAGE_SECRET', self::secret('SECRET')),
