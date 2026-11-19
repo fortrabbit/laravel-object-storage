@@ -43,13 +43,13 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
     private $visibility;
 
     public function __construct(
-        S3ClientInterface   $client,
-        string              $bucket,
-        string              $prefix = '',
-        VisibilityConverter $visibility = null,
-        MimeTypeDetector    $mimeTypeDetector = null,
-        array               $options = [],
-        bool                $streamReads = true
+        S3ClientInterface    $client,
+        string               $bucket,
+        string               $prefix = '',
+        ?VisibilityConverter $visibility = null,
+        ?MimeTypeDetector    $mimeTypeDetector = null,
+        array                $options = [],
+        bool                 $streamReads = true
     )
     {
         $this->client = $client;
@@ -81,8 +81,22 @@ class ObjectStorageAdapter extends AwsS3V3Adapter
     }
 
 
+    /**
+     * @var string|null Base URL from the disk config, used when OBJECT_STORAGE_HOST is not set
+     */
+    private $baseUrl;
+
+    public function setBaseUrl(?string $baseUrl): void
+    {
+        $this->baseUrl = $baseUrl;
+    }
+
     public function getUrl(string $path): string
     {
+        if (!env('OBJECT_STORAGE_HOST') && $this->baseUrl) {
+            return rtrim($this->baseUrl, '/') . '/' . ltrim($path, '/');
+        }
+
         return 'https://' . env('OBJECT_STORAGE_HOST') . '/' . $path;
     }
 

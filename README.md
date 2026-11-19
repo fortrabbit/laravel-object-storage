@@ -2,13 +2,13 @@
 
 ## Install
 
-The most recent version (2.x) is compatible with Laravel 9 and 10
+The most recent version (2.x) is compatible with Laravel 9, 10, 11, 12 and 13
 
 ```
-# For laravel 9 and 10
+# For Laravel 9, 10, 11, 12 and 13
 composer require fortrabbit/laravel-object-storage
 
-# For laravel 6,7,8 
+# For Laravel 6, 7 and 8
 composer require fortrabbit/laravel-object-storage:^1.4
 ```
 

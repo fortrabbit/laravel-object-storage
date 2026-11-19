@@ -3,6 +3,7 @@
 namespace fortrabbit\ObjectStorage;
 
 use Aws\S3\S3Client;
+use Closure;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -24,31 +25,38 @@ class ServiceProvider extends BaseServiceProvider
     {
         /** @var \Illuminate\Filesystem\FilesystemManager $storage */
         $storage = $this->app->make('filesystem');
-        $storage->extend('object-storage', function ($app, array $config) {
+        $storage->extend('object-storage', Closure::fromCallable([$this, 'createDisk']));
+    }
 
-            $s3Config = self::mergeDefaults($config);
-            $prefix = (string) ($s3Config['root'] ?? '');
-            $streamReads = $s3Config['stream_reads'] ?? false;
-            $visibilityConverter = new PortableVisibilityConverter(
-                $config['visibility'] ?? Visibility::PUBLIC
-            );
+    /**
+     * Laravel 13 rebinds anonymous driver closures to the FilesystemManager,
+     * which breaks self:: calls, so the driver is registered from a method.
+     */
+    protected function createDisk($app, array $config): FilesystemAdapter
+    {
+        $s3Config = self::mergeDefaults($config);
+        $prefix = (string) ($s3Config['root'] ?? '');
+        $streamReads = $s3Config['stream_reads'] ?? false;
+        $visibilityConverter = new PortableVisibilityConverter(
+            $config['visibility'] ?? Visibility::PUBLIC
+        );
 
-            $adapter = new ObjectStorageAdapter(
-                new S3Client($s3Config),
-                $s3Config['bucket'],
-                $prefix,
-                $visibilityConverter,
-                null,
-                [],
-                $streamReads
-            );
+        $adapter = new ObjectStorageAdapter(
+            new S3Client($s3Config),
+            $s3Config['bucket'],
+            $prefix,
+            $visibilityConverter,
+            null,
+            [],
+            $streamReads
+        );
+        $adapter->setBaseUrl($s3Config['url'] ?? null);
 
-            return new FilesystemAdapter(
-                new Filesystem($adapter, $config),
-                $adapter,
-                $config
-            );
-        });
+        return new FilesystemAdapter(
+            new Filesystem($adapter, $config),
+            $adapter,
+            $config
+        );
     }
 
     /**
@@ -63,7 +71,8 @@ class ServiceProvider extends BaseServiceProvider
             'region'      => env('OBJECT_STORAGE_REGION', self::secret('REGION')),
             'bucket'      => env('OBJECT_STORAGE_BUCKET', self::secret('BUCKET')),
             'endpoint'    => "https://" . env('OBJECT_STORAGE_SERVER', self::secret('SERVER')),
-            'url'         => env('OBJECT_STORAGE_URL', self::secret('URL')),
+            // App Secrets have HOST, not URL
+            'url'         => env('OBJECT_STORAGE_URL', self::secret('URL') ?? (self::secret('HOST') ? 'https://' . self::secret('HOST') : null)),
             'credentials' => [
                 'key'    => env('OBJECT_STORAGE_KEY', self::secret('KEY')),
                 'secret' => env('OBJECT_STORAGE_SECRET', self::secret('SECRET')),

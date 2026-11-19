@@ -1,6 +1,11 @@
 {
     "name": "fortrabbit/laravel-object-storage",
     "description": "Flysystem adapter for fortrabbit Object Storage",
+    "homepage": "https://www.fortrabbit.com/software/laravel",
+    "support": {
+        "email": "info@fortrabbit.com",
+        "docs": "https://github.com/fortrabbit/laravel-object-storage/blob/master/README.md"
+    },
     "license": "MIT",
     "keywords": [
         "flysystem",
@@ -20,12 +25,12 @@
         "league/flysystem": "^3.0.5",
         "aws/aws-sdk-php": "^3.0.0",
         "league/flysystem-aws-s3-v3": "^3.0.0",
-        "illuminate/support": "^9.0|^10.0|^11.0",
-        "illuminate/filesystem": "^9.0|^10.0|^11.0",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/filesystem": "^9.0|^10.0|^11.0|^12.0|^13.0",
         "league/mime-type-detection": "^1.9"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.4"
+        "phpstan/phpstan": "^1.4|^2.0"
     },
     "autoload": {
         "psr-4": {
