@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.3.0 - 2026-11-18
+## 2.3.0 - 2026-11-19
 
 Laravel 11, 12 and 13 compatibility, PHP 8.4 compatibility
 
