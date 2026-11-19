@@ -1,6 +1,12 @@
 {
     "name": "fortrabbit/laravel-object-storage",
     "description": "Flysystem adapter for fortrabbit Object Storage",
+    "homepage": "https://www.fortrabbit.com/software/laravel",
+    "support": {
+        "docs": "https://github.com/fortrabbit/laravel-object-storage/blob/master/README.md",
+        "source": "https://github.com/fortrabbit/laravel-object-storage",
+        "issues": "https://github.com/fortrabbit/laravel-object-storage/issues"
+    },
     "license": "MIT",
     "keywords": [
         "flysystem",
